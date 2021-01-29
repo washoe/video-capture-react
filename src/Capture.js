@@ -1,9 +1,9 @@
 import React from 'react';
 
-  // next
-  // resize
-  // downsample
-  // flip colours etc
+// next
+// resize
+// downsample
+// flip colours etc
 
 export const Capture = ({ imgData }) => {
   const canvasRef = React.useRef(null);
@@ -14,8 +14,9 @@ export const Capture = ({ imgData }) => {
       let r = imgData.data[i * 4 + 0];
       let g = imgData.data[i * 4 + 1];
       let b = imgData.data[i * 4 + 2];
-      if (g > 100 && r > 100 && b < 43)
+      if (g > 100 && r > 100 && b < 43) {
         imgData.data[i * 4 + 3] = 0;
+      }
     }
     ctx?.putImageData(imgData, 0, 0);
   }
