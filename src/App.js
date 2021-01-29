@@ -1,15 +1,18 @@
 import React from 'react';
 import Webcam from 'react-webcam';
 
-const App = ()=> {
+import Capture from './Capture';
+
+const App = () => {
 
   const webcamRef = React.useRef(null);
-  const [imgSrc, setImgSrc] = React.useState(null);
-
+  const [imgData, setImgData] = React.useState(null);
+  // does not work on first hit! why?
   const capture = React.useCallback(() => {
-    const imageSrc = webcamRef.current.getScreenshot();
-    setImgSrc(imageSrc);
-  }, [webcamRef, setImgSrc]);
+    webcamRef.current.getScreenshot();
+
+    setImgData(webcamRef.current.ctx.getImageData(0, 0, webcamRef.current.canvas.width, webcamRef.current.canvas.height));
+  }, [webcamRef, imgData]);
   return (
     <div className="App">
       <Webcam
@@ -18,11 +21,7 @@ const App = ()=> {
         screenshotFormat="image/jpeg"
       />
       <button onClick={capture}>Capture photo</button>
-      {imgSrc && (
-        <img
-          src={imgSrc}
-        />
-      )}
+      <Capture imgData={imgData}></Capture>
     </div>
   );
 }
